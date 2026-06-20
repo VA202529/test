@@ -1,0 +1,1954 @@
+<!doctype html>
+<html lang="nl" class="h-full">
+ <head><script src="/_sdk/telemetry_sdk.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amstel &amp; Appiah</title>
+  <meta name="description" content="Ontdek vertrouwde lokale bedrijven, producten en diensten in jouw buurt.">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
+    }
+    
+    .animate-fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    .stagger-5 { animation-delay: 0.5s; }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .glass-dark {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    
+    .hover-lift {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .hover-lift:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .image-slider::-webkit-scrollbar { display: none; }
+    .image-slider { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    .nav-blur {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#000000',
+            secondary: '#111111',
+            muted: '#2A2A2A',
+            surface: '#F7F7F7',
+            border: '#EDEDED'
+          }
+        }
+      }
+    }
+  </script>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-white text-gray-900 overflow-x-hidden">
+  <div id="app" class="h-full w-full overflow-auto"><!-- Navigation -->
+   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex items-center justify-between h-16"><a href="#" onclick="navigateTo('home')" class="flex items-center space-x-2">
+       <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center"><span class="text-white font-semibold text-sm">A</span>
+       </div><span id="nav-title" class="font-medium text-lg tracking-tight">Amstel &amp; Appiah</span> </a>
+      <div class="hidden md:flex items-center space-x-8"><a href="#" onclick="navigateTo('home')" class="p-2 hover:bg-gray-100 rounded-lg transition-colors" title="Home">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2.793-2.793a1 1 0 011.414 0L12 13.414l4.793-4.793a1 1 0 011.414 0L21 12M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg></a> <a href="#" onclick="navigateTo('bedrijven')" class="text-sm text-gray-600 hover:text-black transition-colors">Bedrijven</a> <a href="#" onclick="filterByCategory('all')" class="text-sm text-gray-600 hover:text-black transition-colors">Categorieën</a> <a href="#" onclick="showCities()" class="text-sm text-gray-600 hover:text-black transition-colors">Steden</a> <a href="#" onclick="showLegalHub()" class="text-sm text-gray-600 hover:text-black transition-colors">Info</a>
+      </div>
+      <div class="flex items-center space-x-3"><button onclick="toggleSearch()" class="p-2 rounded-full hover:bg-gray-100 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg></button> <button class="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors" onclick="toggleMobileMenu()">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+        </svg></button>
+      </div>
+     </div>
+    </div><!-- Search Bar -->
+    <div id="search-bar" class="hidden border-t border-gray-100 py-4 px-4 sm:px-6 lg:px-8">
+     <div class="max-w-2xl mx-auto">
+      <div class="relative">
+       <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+       </svg><input type="text" id="search-input" placeholder="Zoek op naam, categorie of stad..." class="w-full pl-12 pr-4 py-3 bg-gray-50 rounded-full text-sm focus:bg-white border border-transparent focus:border-gray-200 transition-all" oninput="handleSearch(this.value)">
+      </div>
+     </div>
+    </div><!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 py-4 px-4">
+     <div class="space-y-3"><a href="#" onclick="navigateTo('home'); toggleMobileMenu();" class="block py-2 text-gray-600 hover:text-black">Ontdek</a> <a href="#" onclick="navigateTo('bedrijven'); toggleMobileMenu();" class="block py-2 text-gray-600 hover:text-black">Bedrijven</a> <a href="#" onclick="filterByCategory('all'); toggleMobileMenu();" class="block py-2 text-gray-600 hover:text-black">Categorieën</a> <a href="#" onclick="showCities(); toggleMobileMenu();" class="block py-2 text-gray-600 hover:text-black">Steden</a> <a href="#" onclick="navigateTo('legal'); toggleMobileMenu();" class="block py-2 text-gray-600 hover:text-black">Info</a>
+     </div>
+    </div>
+   </nav><!-- Main Content -->
+   <main id="main-content" class="pt-16"><!-- Home View -->
+    <div id="home-view"><!-- Hero Section -->
+     <section class="relative min-h-[70%] flex items-center justify-center px-4 py-20 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-gray-50 to-white"></div>
+      <div class="absolute top-20 left-10 w-72 h-72 bg-gray-100 rounded-full blur-3xl opacity-60"></div>
+      <div class="absolute bottom-10 right-10 w-96 h-96 bg-gray-50 rounded-full blur-3xl opacity-80"></div>
+      <div class="relative z-10 text-center max-w-3xl mx-auto">
+       <h1 id="hero-heading" class="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-black animate-fade-in-up">Curated Local Excellence</h1>
+       <p id="hero-subheading" class="mt-6 text-lg sm:text-xl text-gray-600 font-light leading-relaxed animate-fade-in-up stagger-1">Ontdek vertrouwde lokale bedrijven, producten en diensten in jouw buurt</p>
+       <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up stagger-2"><button onclick="scrollToItems()" class="px-8 py-3 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all hover:scale-105"> Ontdek Nu </button> <button onclick="showCities()" class="px-8 py-3 bg-white text-black rounded-full text-sm font-medium border border-gray-200 hover:border-gray-300 transition-all hover:scale-105"> Bekijk Steden </button>
+       </div>
+      </div>
+     </section><!-- Filter Bar -->
+     <section id="filter-section" class="sticky top-16 z-40 bg-white/90 backdrop-blur-lg border-b border-gray-100 py-4">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+       <div class="flex flex-wrap items-center gap-3">
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0"><button onclick="filterByCategory('all')" class="filter-btn active px-4 py-2 text-sm rounded-full border border-gray-200 hover:border-gray-300 whitespace-nowrap transition-all" data-category="all"> Alles </button> <button onclick="filterByCategory('restaurant')" class="filter-btn px-4 py-2 text-sm rounded-full border border-gray-200 hover:border-gray-300 whitespace-nowrap transition-all" data-category="restaurant"> Restaurants </button> <button onclick="filterByCategory('service')" class="filter-btn px-4 py-2 text-sm rounded-full border border-gray-200 hover:border-gray-300 whitespace-nowrap transition-all" data-category="service"> Diensten </button> <button onclick="filterByCategory('product')" class="filter-btn px-4 py-2 text-sm rounded-full border border-gray-200 hover:border-gray-300 whitespace-nowrap transition-all" data-category="product"> Producten </button> <button onclick="filterByCategory('beauty')" class="filter-btn px-4 py-2 text-sm rounded-full border border-gray-200 hover:border-gray-300 whitespace-nowrap transition-all" data-category="beauty"> Beauty </button>
+        </div>
+        <div class="ml-auto flex items-center gap-3"><select id="city-filter" onchange="filterByCity(this.value)" class="px-4 py-2 text-sm rounded-full border border-gray-200 bg-white hover:border-gray-300 transition-all cursor-pointer"> <option value="all">Alle steden</option> </select> <select id="sort-filter" onchange="sortItems(this.value)" class="px-4 py-2 text-sm rounded-full border border-gray-200 bg-white hover:border-gray-300 transition-all cursor-pointer"> <option value="featured">Featured</option> <option value="rating">Beste beoordeeld</option> <option value="newest">Nieuwste</option> </select>
+        </div>
+       </div>
+      </div>
+     </section><!-- Featured Section -->
+     <section id="featured-section" class="py-16 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-6xl mx-auto">
+       <div class="flex items-end justify-between mb-8">
+        <div>
+         <h2 class="text-2xl sm:text-3xl font-light tracking-tight">Featured</h2>
+         <p class="mt-2 text-gray-500">Uitgelichte lokale pareltjes</p>
+        </div>
+       </div>
+       <div id="featured-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Featured items will be inserted here -->
+       </div>
+      </div>
+     </section><!-- All Items Section -->
+     <section id="items-section" class="py-16 px-4 sm:px-6 lg:px-8 bg-surface">
+      <div class="max-w-6xl mx-auto">
+       <div class="flex items-end justify-between mb-8">
+        <div>
+         <h2 class="text-2xl sm:text-3xl font-light tracking-tight">Ontdek</h2>
+         <p class="mt-2 text-gray-500" id="items-count">Alle lokale bedrijven</p>
+        </div>
+       </div>
+       <div id="items-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"><!-- Items will be inserted here -->
+       </div>
+       <div id="no-results" class="hidden text-center py-16">
+        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+         <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg>
+        </div>
+        <p class="text-gray-500">Geen resultaten gevonden</p><button onclick="resetFilters()" class="mt-4 text-sm text-black underline hover:no-underline">Reset filters</button>
+       </div>
+      </div>
+     </section>
+    </div><!-- Legal Pages View -->
+    <div id="legal-view" class="hidden pt-20">
+     <div id="legal-content" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16"><!-- Legal content inserted here -->
+     </div>
+    </div><!-- Profile View -->
+    <div id="profile-view" class="hidden">
+     <div id="profile-content"><!-- Profile content will be inserted here -->
+     </div>
+    </div><!-- Item Detail View -->
+    <div id="item-view" class="hidden">
+     <div id="item-content"><!-- Item content will be inserted here -->
+     </div>
+    </div><!-- Bedrijven Listing View -->
+    <div id="bedrijven-view" class="hidden">
+     <div id="bedrijven-content"><!-- Bedrijven listing will be inserted here -->
+     </div>
+    </div><!-- Bedrijf Detail View -->
+    <div id="bedrijf-detail-view" class="hidden">
+     <div id="bedrijf-detail-content"><!-- Bedrijf detail will be inserted here -->
+     </div>
+    </div>
+   </main><!-- Footer -->
+   <footer class="bg-black text-white py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+     <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="md:col-span-2">
+       <div class="flex items-center space-x-2 mb-4">
+        <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center"><span class="text-black font-semibold text-sm">A</span>
+        </div><span class="font-medium text-lg tracking-tight">Amstel &amp; Appiah</span>
+       </div>
+       <p class="text-gray-400 text-sm leading-relaxed max-w-md">Wij verbinden je met vertrouwde lokale bedrijven, diensten en producten. Curated excellence voor jouw buurt.</p>
+      </div>
+      <div>
+       <h4 class="font-medium mb-4">Navigatie</h4>
+       <ul class="space-y-3 text-sm text-gray-400">
+        <li><a href="#" onclick="navigateTo('home')" class="hover:text-white transition-colors">Ontdek</a></li>
+        <li><a href="#" onclick="filterByCategory('all')" class="hover:text-white transition-colors">Categorieën</a></li>
+        <li><a href="#" onclick="showCities()" class="hover:text-white transition-colors">Steden</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-medium mb-4">Contact</h4>
+       <ul class="space-y-3 text-sm text-gray-400">
+        <li><a href="mailto:info@amstelappiah.nl" class="hover:text-white transition-colors">info@amstelappiah.nl</a></li>
+        <li><a href="#" class="hover:text-white transition-colors">Instagram</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-medium mb-4">Juridisch</h4>
+       <ul class="space-y-3 text-sm text-gray-400">
+        <li><a href="#" onclick="showLegalPage('terms')" class="hover:text-white transition-colors">Voorwaarden</a></li>
+        <li><a href="#" onclick="showLegalPage('privacy')" class="hover:text-white transition-colors">Privacy</a></li>
+        <li><a href="#" onclick="showLegalPage('disclaimer')" class="hover:text-white transition-colors">Disclaimer</a></li>
+        <li><a href="#" onclick="showLegalPage('cookies')" class="hover:text-white transition-colors">Cookies</a></li>
+       </ul>
+      </div>
+     </div>
+     <div class="mt-16 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
+      <p>© 2024 Amstel &amp; Appiah. Alle rechten voorbehouden.</p>
+      <p class="mt-2 text-xs text-gray-600">v2.0.0 • Legal Pages Edition</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    /* ==============================
+       1. CONFIG
+    ============================== */
+    const CONFIG = {
+      JSON_URL: 'https://script.google.com/macros/s/AKfycbzgRl7e2NOblMZ3_5L7QsddXaGmG3QOc85JP7a_KJjIJnXGzbOZ89FzgK4O_sPxjucF/exec',
+      DRIVE_API_KEY: 'AIzaSyAyDZqnPrQjHJM5K5xh-qMcG3H_TeRFbiw',
+      IMAGE_GOOGLE_CDN_SIZE: 'w1600',
+      IMAGE_GOOGLE_CDN_SIZE_LARGE: 'w2400'
+    };
+
+    const defaultConfig = {
+      site_title: 'Amstel & Appiah',
+      hero_heading: 'Curated Local Excellence',
+      hero_subheading: 'Ontdek vertrouwde lokale bedrijven, producten en diensten in jouw buurt',
+      background_color: '#FFFFFF',
+      surface_color: '#F7F7F7',
+      text_color: '#111111',
+      primary_action_color: '#000000',
+      secondary_action_color: '#2A2A2A'
+    };
+
+    let editorConfig = { ...defaultConfig };
+    let appSettings = { ...defaultConfig };
+
+    /* ==============================
+       2. STATE STORE (Centralized)
+    ============================== */
+    const STATE = {
+      profiles: [],
+      items: [],
+      filtered: [],
+      cities: [],
+      categories: [],
+      category: 'all',
+      city: 'all',
+      sort: 'featured',
+      search: '',
+      isLoading: false,
+      bedrijven: [],
+      filteredBedrijven: []
+    };
+
+    /* ==============================
+       3. CACHE LAYER
+    ============================== */
+    const CACHE = {
+      images: {},
+      profiles: null,
+      cityList: null,
+      folders: {},
+      
+      getImages: (folderName) => CACHE.images[folderName] || null,
+      setImages: (folderName, images) => { CACHE.images[folderName] = images; },
+      getFolderId: (folderName) => CACHE.folders[folderName] || null,
+      setFolderId: (folderName, folderId) => { CACHE.folders[folderName] = folderId; },
+      clearImages: () => { CACHE.images = {}; },
+      clearFolders: () => { CACHE.folders = {}; }
+    };
+
+    /* ==============================
+       4. DATA LAYER - JSON LOADING
+    ============================== */
+    
+    /**
+     * Load Google Drive folder contents by folder name (from sheet)
+     * Folder path structure: /root/profile_name/item_name/
+     */
+    async function loadDriveFolderImages(folderName, folderLink) {
+      if (!folderName && !folderLink) return [];
+      
+      // Check cache first
+      const cached = CACHE.getImages(folderName || 'unknown');
+      if (cached) return cached;
+      
+      try {
+        // Use folder link if available (contains folder ID)
+        if (folderLink && folderLink.includes('/folders/')) {
+          const folderId = folderLink.split('/folders/')[1].split('/')[0].split('?')[0];
+          console.log('[Drive] Loading images from folder ID:', folderId);
+          
+          const images = await fetchDriveFolderById(folderId);
+          if (images && images.length > 0) {
+            CACHE.setImages(folderName, images);
+            return images;
+          }
+        }
+        
+        return [];
+      } catch (error) {
+        console.error('[Drive] Error loading images:', error);
+        return [];
+      }
+    }
+
+    /**
+     * Fetch images from Google Drive folder by ID
+     */
+    async function fetchDriveFolderById(folderId) {
+      try {
+        // Since we can't use Google Drive API directly from frontend,
+        // and the JSON endpoint provides folder links,
+        // we'll use those links directly if available
+        // For now, return empty array - images will be loaded from direct URLs in profile.image
+        return [];
+      } catch (error) {
+        console.error('[Drive] Fetch error:', error);
+        return [];
+      }
+    }
+
+    /**
+     * Fetch data from JSON endpoint
+     */
+    async function fetchJSONData() {
+      try {
+        console.log('[JSON] Fetching from:', CONFIG.JSON_URL);
+        const response = await fetch(CONFIG.JSON_URL, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json' },
+          cache: 'no-cache'
+        });
+        
+        if (!response.ok) {
+          console.error('[JSON] ❌ HTTP error:', response.status, response.statusText);
+          return { settings: null, profiles: [], items: [], bedrijven: [] };
+        }
+        
+        const text = await response.text();
+        console.log('[JSON] Raw response:', text.substring(0, 200));
+        
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          console.error('[JSON] ❌ JSON parse error:', e);
+          console.error('[JSON] Response was:', text);
+          return { settings: null, profiles: [], items: [], bedrijven: [] };
+        }
+        
+        console.log('[JSON] ✅ Parsed data with keys:', Object.keys(data));
+        console.log('[JSON] Profiles count:', Array.isArray(data.profiles) ? data.profiles.filter(p => p.name && p.name.trim()).length : 0);
+        console.log('[JSON] Bedrijven count:', Array.isArray(data.bedrijven) ? data.bedrijven.filter(b => b.bedrijfsnaam && b.bedrijfsnaam.trim()).length : 0);
+        
+        return {
+          settings: data.settings || {},
+          profiles: Array.isArray(data.profiles) ? data.profiles : [],
+          items: Array.isArray(data.items) ? data.items : [],
+          bedrijven: Array.isArray(data.bedrijven) ? data.bedrijven : []
+        };
+        
+      } catch (error) {
+        console.error('[JSON] ❌ Fatal error:', error);
+        return { settings: null, profiles: [], items: [], bedrijven: [] };
+      }
+    }
+
+    /**
+     * Normalize and validate profile data
+     */
+    function normalizeProfiles(rawProfiles) {
+      return rawProfiles
+        .map((p, idx) => ({
+          id: String(p.id || idx + 1),
+          slug: (p.slug || (p.name || 'profile').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')).trim(),
+          name: String(p.name || '').trim(),
+          category: String(p.category || 'service').toLowerCase().trim(),
+          city: String(p.city || 'Amsterdam').trim(),
+          bio: String(p.bio || '').trim(),
+          rating: Math.min(5, Math.max(0, parseFloat(p.rating) || 4.5)),
+          featured: p.featured === true || p.featured === 'true' || p.featured === 1 || p.featured === '1',
+          whatsapp: String(p.whatsapp || '').trim(),
+          instagram: String(p.instagram || '').trim(),
+          email: String(p.email || '').trim(),
+          image: String(p.image || '').trim(),
+          folder_link: String(p['folder link'] || p.folder_link || '').trim(),
+          folder_name: String(p.folder_name || '').trim()
+        }))
+        .filter(p => p.name && p.name !== '' && p.name.toLowerCase() !== 'unnamed');
+    }
+
+    /**
+     * Normalize and validate item data
+     */
+    function normalizeItems(rawItems) {
+      return rawItems.map((item, idx) => {
+        // If Kenteken exists and titel is empty, fill titel with "RDW: [merk] [handelsnaam]"
+        let titel = String(item.titel || '').trim();
+        if (!titel && item.Kenteken) {
+          const merk = String(item.merk || 'Auto').trim();
+          const handelsnaam = String(item.handelsnaam || '').trim();
+          titel = `RDW: ${merk}${handelsnaam ? ' ' + handelsnaam : ''}`.trim();
+        }
+        
+        return {
+          id: String(item.id || idx + 1),
+          profile_id: String(item.profile_id || ''),
+          titel: titel || 'Untitled',
+          soort: String(item.soort || 'product').toLowerCase().trim(),
+          prijs: item.prijs ? parseFloat(item.prijs) : null,
+          locatie: String(item.locatie || '').trim(),
+          korte_beschrijving: String(item.korte_beschrijving || '').trim(),
+          drive_folder: String(item.drive_folder || '').trim(),
+          rating: Math.min(5, Math.max(0, parseFloat(item.rating) || 4.5)),
+          featured: item.featured === true || item.featured === 'true' || item.featured === 1 || item.featured === '1',
+          // Vehicle-specific fields
+          kenteken: String(item.Kenteken || '').trim(),
+          transmissie: String(item.Transmissie || '').trim(),
+          kilometerstand: item.Kilometerstand ? parseFloat(item.Kilometerstand) : null
+        };
+      });
+    }
+
+    /**
+     * Extract and deduplicate categories and cities
+     */
+    function extractMetadata(profiles) {
+      const categories = [...new Set(profiles.map(p => p.category))].sort();
+      const cities = [...new Set(profiles.map(p => p.city))].sort();
+      return { categories, cities };
+    }
+
+    /**
+     * Apply settings (colors, titles) to the page
+     */
+    function applySettings(settings) {
+      appSettings = { ...defaultConfig, ...settings };
+      
+      document.documentElement.style.setProperty('--bg-color', appSettings.background_color);
+      document.documentElement.style.setProperty('--surface-color', appSettings.surface_color);
+      document.documentElement.style.setProperty('--text-color', appSettings.text_color);
+      document.documentElement.style.setProperty('--primary-action', appSettings.primary_action_color);
+      document.documentElement.style.setProperty('--secondary-action', appSettings.secondary_action_color);
+      
+      document.body.style.backgroundColor = appSettings.background_color;
+      document.getElementById('nav-title').textContent = appSettings.site_title;
+      document.getElementById('hero-heading').textContent = appSettings.hero_heading;
+      document.getElementById('hero-subheading').textContent = appSettings.hero_subheading;
+    }
+
+    /**
+     * Normalize and validate bedrijven data
+     */
+    function normalizeBedrijven(rawBedrijven) {
+      return (Array.isArray(rawBedrijven) ? rawBedrijven : [])
+        .map((b, idx) => ({
+          id: String(b.id || idx + 1),
+          bedrijfsnaam: String(b.bedrijfsnaam || '').trim(),
+          slug: (b.slug || (b.bedrijfsnaam || 'bedrijf').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')).trim(),
+          beschrijving: String(b.beschrijving || '').trim(),
+          adres: String(b.adres || '').trim(),
+          stad: String(b.stad || 'Amsterdam').trim(),
+          land: String(b.land || 'Nederland').trim(),
+          email: String(b.email || '').trim(),
+          telefoon: String(b.telefoon || '').trim(),
+          website: String(b.website || '').trim(),
+          diensten: String(b.diensten || '').trim(),
+          producten: String(b.producten || '').trim(),
+          logo_url: String(b.logo_url || '').trim(),
+          banner_url: String(b.banner_url || '').trim()
+        }))
+        .filter(b => b.bedrijfsnaam && b.bedrijfsnaam !== '' && b.bedrijfsnaam.toLowerCase() !== 'unnamed');
+    }
+
+    /**
+     * Initialize app: load data from JSON endpoint
+     */
+    async function initApp() {
+      STATE.isLoading = true;
+      showLoadingState();
+      
+      try {
+        console.log('[Init] Starting data load from JSON...');
+        const rawData = await fetchJSONData();
+        const { settings, profiles: rawProfiles, items: rawItems, bedrijven: rawBedrijven } = rawData;
+        
+        // Apply settings first
+        if (settings && Object.keys(settings).length > 0) {
+          console.log('[Init] ✅ Applying settings:', Object.keys(settings));
+          applySettings(settings);
+        }
+        
+        // Normalize profiles
+        STATE.profiles = normalizeProfiles(rawProfiles);
+        
+        if (!STATE.profiles || STATE.profiles.length === 0) {
+          console.error('[Init] ❌ No profiles loaded');
+          showServiceUnavailableError();
+          return;
+        }
+        
+        console.log('[Init] ✅ Loaded', STATE.profiles.length, 'profiles');
+        
+        // Normalize items
+        STATE.items = normalizeItems(rawItems);
+        console.log('[Init] ✅ Loaded', STATE.items.length, 'items');
+        
+        // Extract metadata
+        const { categories, cities } = extractMetadata(STATE.profiles);
+        STATE.categories = categories;
+        STATE.cities = cities;
+        STATE.filtered = [...STATE.profiles];
+        
+        console.log('[Init] ✅ Categories:', STATE.categories.join(', '));
+        console.log('[Init] ✅ Cities:', STATE.cities.join(', '));
+        
+        // Pre-load Google Drive folders for profiles
+        console.log('[Init] 🔄 Pre-loading Google Drive folders...');
+        for (const profile of STATE.profiles) {
+          if (profile.folder_link || profile.folder_name) {
+            await loadDriveFolderImages(profile.folder_name, profile.folder_link);
+          }
+        }
+        
+        // Normalize bedrijven
+        STATE.bedrijven = normalizeBedrijven(rawBedrijven);
+        STATE.filteredBedrijven = [...STATE.bedrijven];
+        console.log('[Init] ✅ Loaded', STATE.bedrijven.length, 'bedrijven');
+        
+        if (STATE.bedrijven.length === 0) {
+          console.warn('[Init] ⚠️ No valid bedrijven data loaded. Raw count:', rawBedrijven.length);
+        }
+        
+        // Render UI
+        populateCategoryFilters();
+        populateCityFilter();
+        applyFiltersAndRender();
+        console.log('[Init] ✅ UI fully rendered');
+        
+      } catch (error) {
+        console.error('[Init] ❌ Fatal error:', error);
+        showServiceUnavailableError();
+      } finally {
+        STATE.isLoading = false;
+        hideLoadingState();
+      }
+    }
+      const errorHtml = `
+        <div class="min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-gradient-to-b from-gray-50 to-white">
+          <div class="max-w-md text-center">
+            <!-- 503 Error Code -->
+            <div class="mb-8">
+              <div class="text-7xl font-light text-gray-300 tracking-tight">503</div>
+              <div class="h-1 w-16 bg-black mx-auto mt-4"></div>
+            </div>
+            
+            <!-- Error Title -->
+            <h1 class="text-2xl sm:text-3xl font-light tracking-tight text-black mb-3">
+              Service Temporarily Unavailable
+            </h1>
+            
+            <!-- Error Description -->
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">
+              We're experiencing technical difficulties connecting to our database. Our team is working to resolve this issue. Please try again in a few moments.
+            </p>
+            
+            <!-- Status Indicator -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 border border-orange-200 rounded-full mb-8">
+              <div class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+              <span class="text-xs text-orange-700 font-medium">Database connection error</span>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+              <button onclick="location.reload()" class="px-6 py-3 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all">
+                Try Again
+              </button>
+              <a href="mailto:info@amstelappiah.nl" class="px-6 py-3 bg-white text-black border border-gray-200 rounded-full text-sm font-medium hover:border-gray-300 transition-all">
+                Report Issue
+              </a>
+            </div>
+            
+            <!-- Support Info -->
+            <p class="text-xs text-gray-500 mt-8">
+              If this persists, please contact support at<br>
+              <a href="mailto:info@amstelappiah.nl" class="text-black underline hover:no-underline">info@amstelappiah.nl</a>
+            </p>
+          </div>
+        </div>
+      `;
+      
+      // Replace entire main content with error page
+      document.getElementById('main-content').innerHTML = errorHtml;
+      
+      return;
+
+    /**
+     * Show error message when data cannot be loaded (in-page error)
+     */
+    function showDataError(message) {
+      const errorHtml = `
+        <div class="col-span-full text-center py-16">
+          <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4m0 4v.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <p class="text-red-600 font-medium text-lg">${message}</p>
+          <p class="text-gray-500 text-sm mt-2">Neem contact op met de beheerder als het probleem aanhoudt.</p>
+        </div>
+      `;
+      
+      document.getElementById('featured-grid').innerHTML = errorHtml;
+      document.getElementById('items-grid').innerHTML = errorHtml;
+      document.getElementById('no-results').classList.add('hidden');
+    }
+
+    /**
+     * Show 503 service unavailable error page
+     */
+    function showServiceUnavailableError() {
+      const errorHtml = `
+        <div class="min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-gradient-to-b from-gray-50 to-white">
+          <div class="max-w-md text-center">
+            <!-- 503 Error Code -->
+            <div class="mb-8">
+              <div class="text-7xl font-light text-gray-300 tracking-tight">503</div>
+              <div class="h-1 w-16 bg-black mx-auto mt-4"></div>
+            </div>
+            
+            <!-- Error Title -->
+            <h1 class="text-2xl sm:text-3xl font-light tracking-tight text-black mb-3">
+              Service Temporarily Unavailable
+            </h1>
+            
+            <!-- Error Description -->
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">
+              We're experiencing technical difficulties connecting to our database. Our team is working to resolve this issue. Please try again in a few moments.
+            </p>
+            
+            <!-- Status Indicator -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 border border-orange-200 rounded-full mb-8">
+              <div class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+              <span class="text-xs text-orange-700 font-medium">Database connection error</span>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+              <button onclick="location.reload()" class="px-6 py-3 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all">
+                Try Again
+              </button>
+              <a href="mailto:info@amstelappiah.nl" class="px-6 py-3 bg-white text-black border border-gray-200 rounded-full text-sm font-medium hover:border-gray-300 transition-all">
+                Report Issue
+              </a>
+            </div>
+            
+            <!-- Support Info -->
+            <p class="text-xs text-gray-500 mt-8">
+              If this persists, please contact support at<br>
+              <a href="mailto:info@amstelappiah.nl" class="text-black underline hover:no-underline">info@amstelappiah.nl</a>
+            </p>
+          </div>
+        </div>
+      `;
+      
+      // Replace entire main content with error page
+      document.getElementById('main-content').innerHTML = errorHtml;
+    }
+
+    /* ==============================
+       5. FILTER ENGINE (Pure)
+    ============================== */
+    
+    /**
+     * Pure filter logic - no side effects
+     * @returns {Array} Filtered and sorted profiles
+     */
+    function computeFilteredState() {
+      let result = STATE.profiles.filter(profile => {
+        // Category filter
+        if (STATE.category !== 'all' && profile.category !== STATE.category) {
+          return false;
+        }
+        
+        // City filter
+        if (STATE.city !== 'all' && profile.city !== STATE.city) {
+          return false;
+        }
+        
+        // Search filter
+        if (STATE.search) {
+          const needle = STATE.search.toLowerCase();
+          const haystack = `${profile.name} ${profile.bio} ${profile.city} ${profile.category}`.toLowerCase();
+          if (!haystack.includes(needle)) {
+            return false;
+          }
+        }
+        
+        return true;
+      });
+      
+      // Apply sorting
+      result.sort((a, b) => {
+        switch (STATE.sort) {
+          case 'rating':
+            return b.rating - a.rating;
+          case 'newest':
+            return parseInt(b.id) - parseInt(a.id);
+          case 'featured':
+          default:
+            return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+        }
+      });
+      
+      return result;
+    }
+
+    /**
+     * Apply filters and update STATE, then render
+     */
+    function applyFiltersAndRender() {
+      STATE.filtered = computeFilteredState();
+      renderFeatured();
+      renderAllItems();
+    }
+
+    /* ==============================
+       6. UI RENDER LAYER
+    ============================== */
+    
+    function getFirstImage(profile) {
+      // Check for direct image URL first
+      if (profile.image && profile.image.startsWith('http')) {
+        return profile.image;
+      }
+      // Fall back to placeholder
+      return getPlaceholderImage();
+    }
+
+    function getPlaceholderImage() {
+      return `data:image/svg+xml,${encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">
+          <defs>
+            <linearGradient id="grad">
+              <stop offset="0%" style="stop-color:#f3f4f6"/>
+              <stop offset="100%" style="stop-color:#e5e7eb"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#grad)"/>
+        </svg>
+      `)}`;
+    }
+
+    function getCategoryLabel(category) {
+      // Dynamically get label from available categories, or format as title case
+      const label = STATE.categories.find(c => c === category);
+      if (label) return label.charAt(0).toUpperCase() + label.slice(1);
+      return category.charAt(0).toUpperCase() + category.slice(1);
+    }
+
+    /**
+     * Create a profile card HTML
+     */
+    function createProfileCard(profile, index) {
+      const imageUrl = getFirstImage(profile);
+      const categoryLabel = getCategoryLabel(profile.category);
+      const delay = Math.min(index * 0.05, 0.5);
+      const isFav = isFavorite(profile.slug);
+      
+      const html = `
+        <article 
+          class="glass-card rounded-2xl overflow-hidden border border-gray-100 hover-lift cursor-pointer animate-fade-in-up group"
+          style="animation-delay: ${delay}s"
+          data-slug="${profile.slug}"
+        >
+          <div class="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+            <img 
+              src="${imageUrl}" 
+              alt="${profile.name}"
+              loading="lazy"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            >
+            <div class="hidden absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-400 text-sm font-light">
+              No Image
+            </div>
+            <button 
+              class="absolute top-3 right-3 p-2 glass-card rounded-full transition-all transform hover:scale-110 opacity-0 group-hover:opacity-100"
+              onclick="event.stopPropagation(); toggleFavorite('${profile.slug}'); event.currentTarget.blur();"
+              data-favorite-btn="${profile.slug}"
+            >
+              <svg class="w-5 h-5 ${isFav ? 'text-red-500' : 'text-gray-400'}" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+            </button>
+            ${profile.featured ? `
+              <div class="absolute top-3 left-3 px-2 py-1 bg-black text-white text-xs rounded-full animate-fade-in-up">
+                Featured
+              </div>
+            ` : ''}
+          </div>
+          <div class="p-4">
+            <div class="flex items-start justify-between gap-2">
+              <div class="min-w-0 flex-1">
+                <h3 class="font-medium text-base truncate group-hover:text-black transition-colors">${profile.name}</h3>
+                <p class="text-sm text-gray-500 mt-0.5">${profile.city}</p>
+              </div>
+              <div class="flex items-center gap-1 flex-shrink-0">
+                <svg class="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-sm font-medium">${profile.rating}</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mt-2 line-clamp-2">${profile.bio}</p>
+            <div class="mt-3">
+              <span class="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full">${categoryLabel}</span>
+            </div>
+          </div>
+        </article>
+      `;
+      
+      return html;
+    }
+
+    function renderFeatured() {
+      const featured = STATE.profiles.filter(p => p.featured).slice(0, 3);
+      const container = document.getElementById('featured-grid');
+      
+      if (featured.length === 0) {
+        container.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Geen featured items</p>';
+        return;
+      }
+      
+      container.innerHTML = featured.map((p, i) => createProfileCard(p, i)).join('');
+      attachProfileCardListeners(container);
+    }
+
+    function renderAllItems() {
+      const container = document.getElementById('items-grid');
+      const noResults = document.getElementById('no-results');
+      const countEl = document.getElementById('items-count');
+      
+      if (STATE.filtered.length === 0) {
+        container.innerHTML = '';
+        noResults.classList.remove('hidden');
+        countEl.textContent = 'Geen resultaten';
+        return;
+      }
+      
+      noResults.classList.add('hidden');
+      countEl.textContent = `${STATE.filtered.length} ${STATE.filtered.length === 1 ? 'bedrijf' : 'bedrijven'}`;
+      container.innerHTML = STATE.filtered.map((p, i) => createProfileCard(p, i)).join('');
+      attachProfileCardListeners(container);
+    }
+
+    /**
+     * Event delegation for profile cards
+     */
+    function attachProfileCardListeners(container) {
+      container.querySelectorAll('article[data-slug]').forEach(article => {
+        article.addEventListener('click', (e) => {
+          const slug = article.dataset.slug;
+          showProfile(slug);
+        });
+      });
+    }
+
+    function showLoadingState() {
+      document.getElementById('featured-grid').innerHTML = `
+        <div class="col-span-full flex justify-center py-16">
+          <div class="w-8 h-8 border-2 border-gray-200 border-t-black rounded-full animate-spin"></div>
+        </div>
+      `;
+      document.getElementById('items-grid').innerHTML = `
+        <div class="col-span-full flex justify-center py-16">
+          <div class="w-8 h-8 border-2 border-gray-200 border-t-black rounded-full animate-spin"></div>
+        </div>
+      `;
+    }
+
+    function hideLoadingState() {
+      // Replaced by actual content
+    }
+
+    /* ==============================
+       7. PROFILE VIEW
+    ============================== */
+    
+    function showProfile(slug) {
+      const profile = STATE.profiles.find(p => p.slug === slug);
+      if (!profile) return;
+      
+      // Hide home, show profile
+      document.getElementById('home-view').classList.add('hidden');
+      document.getElementById('profile-view').classList.remove('hidden');
+      
+      // Load images from Google Drive folder if available
+      const images = CACHE.getImages(profile.folder_name) || [];
+      const heroImage = images.length > 0 ? images[0].url : getFirstImage(profile);
+      
+      const html = `
+        <div class="animate-fade-in">
+          <!-- Hero -->
+          <div class="relative h-64 sm:h-80 bg-gray-100">
+            <img 
+              src="${heroImage}"
+              alt="${profile.name}"
+              loading="lazy"
+              class="w-full h-full object-cover"
+              onerror="console.error('Hero image failed:', this.src); this.src='${getPlaceholderImage()}';"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <button id="back-btn" class="absolute top-4 left-4 p-2 glass-card rounded-full hover:bg-white transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+          </div>
+          
+          <!-- Profile Info -->
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-10">
+            <div class="glass-card rounded-2xl border border-gray-100 p-6 sm:p-8">
+              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+                <div>
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full">${getCategoryLabel(profile.category)}</span>
+                    ${profile.featured ? '<span class="px-2 py-1 text-xs bg-black text-white rounded-full">Featured</span>' : ''}
+                  </div>
+                  <h1 class="text-2xl sm:text-3xl font-light tracking-tight">${profile.name}</h1>
+                  <div class="flex items-center gap-3 mt-2 text-gray-500 flex-wrap">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      </svg>
+                      ${profile.city}
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                      </svg>
+                      ${profile.rating}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <p class="text-gray-600 leading-relaxed">${profile.bio}</p>
+              
+              <!-- Contact -->
+              <div class="mt-8 flex flex-wrap gap-3">
+                ${profile.whatsapp ? `
+                  <a href="https://wa.me/${profile.whatsapp.replace(/[^0-9]/g, '')}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all hover:scale-105">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    WhatsApp
+                  </a>
+                ` : ''}
+                ${profile.instagram ? `
+                  <a href="https://instagram.com/${profile.instagram.replace('@', '')}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-6 py-3 bg-white text-black border border-gray-200 rounded-full text-sm font-medium hover:border-gray-300 transition-all hover:scale-105">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    Instagram
+                  </a>
+                ` : ''}
+                ${profile.email ? `
+                  <a href="mailto:${profile.email}" class="flex items-center gap-2 px-6 py-3 bg-white text-black border border-gray-200 rounded-full text-sm font-medium hover:border-gray-300 transition-all hover:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    Email
+                  </a>
+                ` : ''}
+                ${profile.folder_link ? `
+                  <a href="${profile.folder_link}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-6 py-3 bg-white text-black border border-gray-200 rounded-full text-sm font-medium hover:border-gray-300 transition-all hover:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+                    </svg>
+                    Google Drive
+                  </a>
+                ` : ''}
+              </div>
+            </div>
+            
+            <!-- Gallery -->
+            ${images.length > 1 ? `
+              <div class="mt-8">
+                <h2 class="text-xl font-light mb-4">Gallerij</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  ${images.slice(1).map((img, i) => `
+                    <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 animate-fade-in-up" style="animation-delay: ${i * 0.1}s">
+                      <img 
+                        src="${img.url}" 
+                        alt="${img.name}"
+                        loading="lazy"
+                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        onerror="console.error('Gallery image failed:', this.src);"
+                      >
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+          
+          <div class="h-16"></div>
+        </div>
+      `;
+      
+      document.getElementById('profile-content').innerHTML = html;
+      
+      // Attach back button listener
+      document.getElementById('back-btn').addEventListener('click', () => {
+        navigateTo('home');
+      });
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ==============================
+       8. NAVIGATION ENGINE
+    ============================== */
+    
+    function navigateTo(view) {
+      document.getElementById('home-view').classList.add('hidden');
+      document.getElementById('profile-view').classList.add('hidden');
+      document.getElementById('legal-view').classList.add('hidden');
+      document.getElementById('bedrijven-view').classList.add('hidden');
+      document.getElementById('bedrijf-detail-view').classList.add('hidden');
+      
+      if (view === 'home') {
+        document.getElementById('home-view').classList.remove('hidden');
+      } else if (view === 'legal') {
+        showLegalHub();
+      } else if (view === 'bedrijven') {
+        showBedrijvenListing();
+      }
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showLegalHub() {
+      const legalPages = ['terms', 'privacy', 'disclaimer', 'cookies'];
+      const lang = 'nl';
+      
+      document.getElementById('home-view').classList.add('hidden');
+      document.getElementById('profile-view').classList.add('hidden');
+      document.getElementById('legal-view').classList.remove('hidden');
+      
+      let cardsHtml = `
+        <div class="mb-12 animate-fade-in-up">
+          <h1 class="text-3xl sm:text-4xl font-light tracking-tight mb-3">Juridisch</h1>
+          <p class="text-gray-600">Alles wat je moet weten over onze voorwaarden, privacy en policies</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      `;
+      
+      legalPages.forEach((page, idx) => {
+        const content = LEGAL_CONTENT[lang][page];
+        const preview = content.sections[0].text.replace(/<br>/g, ' ').substring(0, 80) + '...';
+        const icons = {
+          terms: '📜',
+          privacy: '🔐',
+          disclaimer: '⚠️',
+          cookies: '🍪'
+        };
+        
+        cardsHtml += `
+          <div 
+            class="glass-card rounded-2xl border border-gray-100 p-6 hover-lift animate-fade-in-up cursor-pointer transition-all"
+            style="animation-delay: ${idx * 0.1}s"
+            onclick="showLegalPage('${page}')"
+          >
+            <div class="text-4xl mb-4">${icons[page]}</div>
+            <h3 class="text-lg font-medium mb-2">${content.title.replace(icons[page] + ' ', '')}</h3>
+            <p class="text-sm text-gray-600 mb-4">${preview}</p>
+            <div class="text-sm font-medium text-black flex items-center gap-1 hover:gap-2 transition-all">
+              Lees meer
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        `;
+      });
+      
+      cardsHtml += `</div>`;
+      
+      document.getElementById('legal-content').innerHTML = cardsHtml;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleSearch() {
+      const searchBar = document.getElementById('search-bar');
+      searchBar.classList.toggle('hidden');
+      if (!searchBar.classList.contains('hidden')) {
+        document.getElementById('search-input').focus();
+      }
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    function scrollToItems() {
+      document.getElementById('items-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showCities() {
+      navigateTo('home');
+      setTimeout(() => {
+        document.getElementById('filter-section').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('city-filter').focus();
+      }, 100);
+    }
+
+    /* ==============================
+       9. FILTER UI HANDLERS
+    ============================== */
+    
+    /**
+     * Public filter functions called from HTML
+     */
+    function filterByCategory(category) {
+      STATE.category = category;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-black', 'text-white');
+        btn.classList.add('border-gray-200');
+        if (btn.dataset.category === category) {
+          btn.classList.add('bg-black', 'text-white');
+          btn.classList.remove('border-gray-200');
+        }
+      });
+      applyFiltersAndRender();
+    }
+
+    function filterByCity(value) {
+      STATE.city = value;
+      applyFiltersAndRender();
+    }
+
+    function sortItems(value) {
+      STATE.sort = value;
+      applyFiltersAndRender();
+    }
+
+    function handleSearch(query) {
+      STATE.search = query.toLowerCase().trim();
+      applyFiltersAndRender();
+    }
+
+    function populateCategoryFilters() {
+      // Update filter buttons dynamically based on STATE.categories
+      const filterSection = document.getElementById('filter-section');
+      const categoryButtons = filterSection.querySelector('.flex.items-center.gap-2.overflow-x-auto');
+      
+      if (categoryButtons) {
+        let html = `
+          <button onclick="filterByCategory('all')" class="filter-btn active px-4 py-2 text-sm rounded-full border border-gray-200 hover:border-gray-300 whitespace-nowrap transition-all" data-category="all">
+            Alles
+          </button>
+        `;
+        
+        STATE.categories.forEach(cat => {
+          html += `
+            <button onclick="filterByCategory('${cat}')" class="filter-btn px-4 py-2 text-sm rounded-full border border-gray-200 hover:border-gray-300 whitespace-nowrap transition-all" data-category="${cat}">
+              ${getCategoryLabel(cat)}
+            </button>
+          `;
+        });
+        
+        categoryButtons.innerHTML = html;
+      }
+    }
+
+    function populateCityFilter() {
+      const select = document.getElementById('city-filter');
+      select.innerHTML = '<option value="all">Alle steden</option>' +
+        STATE.cities.map(city => `<option value="${city}">${city}</option>`).join('');
+    }
+
+    function resetFilters() {
+      STATE.category = 'all';
+      STATE.city = 'all';
+      STATE.sort = 'featured';
+      STATE.search = '';
+      
+      document.getElementById('city-filter').value = 'all';
+      document.getElementById('sort-filter').value = 'featured';
+      document.getElementById('search-input').value = '';
+      
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-black', 'text-white');
+        btn.classList.add('border-gray-200');
+        if (btn.dataset.category === 'all') {
+          btn.classList.add('bg-black', 'text-white');
+          btn.classList.remove('border-gray-200');
+        }
+      });
+      
+      applyFiltersAndRender();
+    }
+
+    /* ==============================
+       10. ELEMENT SDK INTEGRATION
+    ============================== */
+    
+    async function onConfigChange(newConfig) {
+      editorConfig = { ...editorConfig, ...newConfig };
+      
+      document.getElementById('nav-title').textContent = editorConfig.site_title || defaultConfig.site_title;
+      document.getElementById('hero-heading').textContent = editorConfig.hero_heading || defaultConfig.hero_heading;
+      document.getElementById('hero-subheading').textContent = editorConfig.hero_subheading || defaultConfig.hero_subheading;
+      
+      document.body.style.backgroundColor = editorConfig.background_color || defaultConfig.background_color;
+    }
+
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+          },
+          {
+            get: () => cfg.surface_color || defaultConfig.surface_color,
+            set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ['site_title', cfg.site_title || defaultConfig.site_title],
+        ['hero_heading', cfg.hero_heading || defaultConfig.hero_heading],
+        ['hero_subheading', cfg.hero_subheading || defaultConfig.hero_subheading]
+      ]);
+    }
+
+    /* ==============================
+       11. INIT
+    ============================== */
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    /* ==============================
+       12. LEGAL PAGES DATA & RENDERING
+    ============================== */
+    
+    const LEGAL_CONTENT = {
+      nl: {
+        terms: {
+          title: '📜 Algemene Voorwaarden',
+          sections: [
+            {
+              heading: '1. Algemeen',
+              text: 'Deze website is een showcase- en presentatieplatform. De informatie, producten en diensten die worden getoond zijn bedoeld ter inspiratie en informatie. De eigenaar van deze website (hierna: "wij") streeft naar een zo correct en actueel mogelijke weergave, maar kan niet garanderen dat alle informatie volledig, correct of actueel is.'
+            },
+            {
+              heading: '2. Geen garantie op producten of diensten',
+              text: 'De producten en diensten die op deze website worden weergegeven:<br>• worden mogelijk aangeboden door derden<br>• zijn niet altijd door ons gecontroleerd<br>• kunnen in kwaliteit, beschikbaarheid en prijs verschillen<br><br>Wij geven geen garanties over:<br>• kwaliteit<br>• werking<br>• echtheid<br>• veiligheid<br>• levering<br><br>Aankopen of afspraken die voortkomen uit deze website zijn volledig op eigen risico.'
+            },
+            {
+              heading: '3. Aansprakelijkheid',
+              text: 'Wij zijn niet aansprakelijk voor:<br>• directe of indirecte schade<br>• financiële verliezen<br>• dataverlies<br>• schade door onjuiste informatie<br>• problemen bij transacties met derden<br><br>Gebruik van deze website is volledig op eigen verantwoordelijkheid.'
+            },
+            {
+              heading: '4. Online fraude & veiligheid',
+              text: 'Wij waarschuwen gebruikers om:<br>• alert te zijn op online fraude<br>• nooit zomaar persoonlijke of financiële gegevens te delen<br>• zelf onderzoek te doen naar aanbieders<br><br>Wij zijn niet verantwoordelijk voor fraude, misleiding of conflicten tussen gebruikers en derden.'
+            },
+            {
+              heading: '5. Leeftijd',
+              text: 'Deze website is primair bedoeld voor gebruikers van 18 jaar en ouder. Minderjarigen mogen de website alleen gebruiken onder toezicht van een ouder of voogd.'
+            },
+            {
+              heading: '6. Wijzigingen',
+              text: 'Wij behouden ons het recht voor deze voorwaarden op elk moment te wijzigen. De meest recente versie is altijd van toepassing.'
+            }
+          ]
+        },
+        privacy: {
+          title: '🔐 Privacybeleid',
+          sections: [
+            {
+              heading: '1. Gegevensverzameling',
+              text: 'Wij kunnen de volgende gegevens verwerken:<br>• naam of gebruikersnaam<br>• e-mailadres<br>• profielinformatie<br>• technische gegevens (zoals IP-adres en browser)<br><br>Deze gegevens worden uitsluitend gebruikt voor:<br>• het functioneren van de website<br>• communicatie<br>• beveiliging en verbetering van de dienst'
+            },
+            {
+              heading: '2. Opslag & beveiliging',
+              text: 'Wij nemen passende maatregelen om gegevens te beschermen, maar kunnen geen absolute veiligheid garanderen. Gegevens worden niet verkocht aan derden.'
+            },
+            {
+              heading: '3. Delen met derden',
+              text: 'Gegevens kunnen gedeeld worden met:<br>• technische dienstverleners (zoals hosting)<br>• alleen wanneer dit noodzakelijk is voor de werking van de website'
+            },
+            {
+              heading: '4. Rechten van gebruikers',
+              text: 'Gebruikers hebben het recht om:<br>• hun gegevens in te zien<br>• gegevens te laten aanpassen<br>• gegevens te laten verwijderen (AVG-compliant)'
+            }
+          ]
+        },
+        disclaimer: {
+          title: '⚠️ Disclaimer',
+          sections: [
+            {
+              heading: 'Belangrijke mededelingen',
+              text: 'De inhoud van deze website is uitsluitend bedoeld voor informatieve en demonstratieve doeleinden.<br><br>Wij geven geen garanties over:<br>• juistheid<br>• volledigheid<br>• geschiktheid voor een specifiek doel<br><br>Gebruik van informatie op deze website gebeurt op eigen risico.'
+            }
+          ]
+        },
+        cookies: {
+          title: '🍪 Cookiebeleid',
+          sections: [
+            {
+              heading: '1. Wat zijn cookies?',
+              text: 'Cookies zijn kleine tekstbestanden die worden opgeslagen op je apparaat om de website beter te laten functioneren.'
+            },
+            {
+              heading: '2. Welke cookies gebruiken wij?',
+              text: 'Wij kunnen cookies gebruiken voor:<br>• basisfunctionaliteit van de website<br>• gebruikersinstellingen<br>• anonieme statistieken'
+            },
+            {
+              heading: '3. Cookies beheren',
+              text: 'Gebruikers kunnen cookies:<br>• uitschakelen via de browser<br>• verwijderen via browserinstellingen<br><br>Het uitschakelen van cookies kan invloed hebben op de werking van de website.'
+            },
+            {
+              heading: '4. Derde partijen',
+              text: 'Sommige cookies kunnen afkomstig zijn van derde partijen (zoals analytics- of hostingdiensten).'
+            }
+          ]
+        }
+      },
+      en: {
+        terms: {
+          title: 'Terms & Conditions',
+          sections: [
+            {
+              heading: '1. General',
+              text: 'This website is a showcase and demonstration platform. All information, products, and services are for inspiration only. We strive for accuracy but do not guarantee completeness or correctness.'
+            },
+            {
+              heading: '2. No warranty on products or services',
+              text: 'Products may be offered by third parties. We do not fully control these and give no guarantees regarding:<br>• quality<br>• functionality<br>• authenticity<br>• availability<br>• delivery<br><br>Purchases or agreements resulting from this website are entirely at your own risk.'
+            },
+            {
+              heading: '3. Liability',
+              text: 'We are not liable for:<br>• direct or indirect damage<br>• financial loss<br>• data loss<br>• damage due to incorrect information<br>• issues arising from third-party transactions<br><br>Use of this website is entirely at your own responsibility.'
+            },
+            {
+              heading: '4. Online fraud & safety',
+              text: 'We warn users to:<br>• remain vigilant against online fraud<br>• never share personal or financial information with strangers<br>• conduct their own research on providers<br><br>We are not responsible for deception or disputes between users and third parties.'
+            },
+            {
+              heading: '5. Age restriction',
+              text: 'This website is intended for users 18 years or older. Minors may use the website only under parental or guardian supervision.'
+            },
+            {
+              heading: '6. Changes',
+              text: 'We reserve the right to update these terms at any time. The latest version always applies.'
+            }
+          ]
+        },
+        privacy: {
+          title: 'Privacy Policy',
+          sections: [
+            {
+              heading: '1. Data collection',
+              text: 'We may collect:<br>• Name or username<br>• Email address<br>• Profile information<br>• Technical data (IP address, browser)<br><br>Purpose: website functionality, communication, security, and service improvement.'
+            },
+            {
+              heading: '2. Storage & security',
+              text: 'Data is securely stored, but absolute security cannot be guaranteed. Data is not sold to third parties.'
+            },
+            {
+              heading: '3. Sharing with third parties',
+              text: 'Data may be shared with service providers only as needed for website operation.'
+            },
+            {
+              heading: '4. User rights',
+              text: 'Users can:<br>• View their data<br>• Modify their data<br>• Request deletion (GDPR compliant)'
+            }
+          ]
+        },
+        disclaimer: {
+          title: 'Disclaimer',
+          sections: [
+            {
+              heading: 'Important notice',
+              text: 'The content of this website is intended for informative and demonstration purposes only.<br><br>We give no guarantees regarding:<br>• accuracy<br>• completeness<br>• suitability for a specific purpose<br><br>Use is at your own risk.'
+            }
+          ]
+        },
+        cookies: {
+          title: 'Cookie Policy',
+          sections: [
+            {
+              heading: '1. What are cookies?',
+              text: 'Cookies are small files that improve functionality or track statistics.'
+            },
+            {
+              heading: '2. Which cookies do we use?',
+              text: 'We may use cookies for:<br>• basic website functionality<br>• user settings<br>• anonymous statistics'
+            },
+            {
+              heading: '3. Management',
+              text: 'Users can disable or delete cookies via browser settings. Some features may not function properly.'
+            },
+            {
+              heading: '4. Third-party cookies',
+              text: 'Some cookies may come from third-party services (analytics, hosting).'
+            }
+          ]
+        }
+      }
+    };
+
+    function showLegalPage(page) {
+      const lang = 'nl';
+      const content = LEGAL_CONTENT[lang][page];
+      
+      if (!content) return;
+      
+      document.getElementById('home-view').classList.add('hidden');
+      document.getElementById('profile-view').classList.add('hidden');
+      document.getElementById('legal-view').classList.remove('hidden');
+      
+      let html = `
+        <button onclick="showLegalHub()" class="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-black mb-8 transition-colors transform hover:scale-105 animate-fade-in-up">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Terug naar juridisch
+        </button>
+        
+        <div class="mb-12 animate-fade-in-up stagger-1">
+          <h1 class="text-3xl sm:text-4xl font-light tracking-tight mb-3">${content.title}</h1>
+        </div>
+        
+        <div class="space-y-8">
+      `;
+      
+      content.sections.forEach((section, idx) => {
+        html += `
+          <div class="animate-fade-in-up" style="animation-delay: ${(idx + 2) * 0.08}s">
+            <h2 class="text-lg sm:text-xl font-medium mb-3 text-black">${section.heading}</h2>
+            <div class="text-gray-600 leading-relaxed text-sm sm:text-base space-y-2">
+              ${section.text.split('<br>').map(para => {
+                if (para.startsWith('•')) {
+                  return `<li class="ml-4">${para.substring(1).trim()}</li>`;
+                }
+                return `<p>${para.trim()}</p>`;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      });
+      
+      html += `
+        </div>
+        
+        <div class="mt-16 pt-8 border-t border-gray-200 text-center text-xs sm:text-sm text-gray-500 animate-fade-in-up" style="animation-delay: ${(content.sections.length + 3) * 0.08}s">
+          <p>© 2024 Amstel & Appiah. Alle rechten voorbehouden.</p>
+        </div>
+      `;
+      
+      document.getElementById('legal-content').innerHTML = html;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Start
+    document.addEventListener('DOMContentLoaded', () => {
+      initApp();
+      loadFavorites();
+    });
+
+    /* ==============================
+       13. FAVORITES SYSTEM
+    ============================== */
+    
+    const FAVORITES_KEY = 'aa_favorites';
+    let favorites = [];
+
+    function loadFavorites() {
+      const stored = localStorage.getItem(FAVORITES_KEY);
+      favorites = stored ? JSON.parse(stored) : [];
+    }
+
+    function saveFavorites() {
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    }
+
+    function toggleFavorite(slug) {
+      const idx = favorites.indexOf(slug);
+      if (idx > -1) {
+        favorites.splice(idx, 1);
+      } else {
+        favorites.push(slug);
+      }
+      saveFavorites();
+      updateFavoriteButtons();
+    }
+
+    function isFavorite(slug) {
+      return favorites.includes(slug);
+    }
+
+    function updateFavoriteButtons() {
+      document.querySelectorAll('[data-favorite-btn]').forEach(btn => {
+        const slug = btn.dataset.favoriteBtn;
+        if (isFavorite(slug)) {
+          btn.classList.add('text-red-500');
+          btn.classList.remove('text-gray-400');
+        } else {
+          btn.classList.remove('text-red-500');
+          btn.classList.add('text-gray-400');
+        }
+      });
+    }
+
+    /* ==============================
+       14. BEDRIJVEN LISTING & DETAIL
+    ============================== */
+    
+    function getPlaceholderBannerImage() {
+      return `data:image/svg+xml,${encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="800" height="400">
+          <defs>
+            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#f3f4f6"/>
+              <stop offset="100%" style="stop-color:#e5e7eb"/>
+            </linearGradient>
+          </defs>
+          <rect width="800" height="400" fill="url(#grad)"/>
+        </svg>
+      `)}`;
+    }
+
+    function getPlaceholderLogoImage() {
+      return `data:image/svg+xml,${encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150">
+          <circle cx="75" cy="75" r="75" fill="#f3f4f6"/>
+          <circle cx="75" cy="75" r="70" fill="white"/>
+          <text x="75" y="85" font-size="40" font-weight="bold" text-anchor="middle" fill="#d1d5db" font-family="Arial">B</text>
+        </svg>
+      `)}`;
+    }
+
+    function createBedrijfCard(bedrijf, index) {
+      const bannerUrl = bedrijf.banner_url && bedrijf.banner_url.startsWith('http') ? bedrijf.banner_url : getPlaceholderBannerImage();
+      const logoUrl = bedrijf.logo_url && bedrijf.logo_url.startsWith('http') ? bedrijf.logo_url : getPlaceholderLogoImage();
+      const delay = Math.min(index * 0.05, 0.5);
+      
+      return `
+        <article 
+          class="glass-card rounded-2xl overflow-hidden border border-gray-100 hover-lift cursor-pointer animate-fade-in-up group h-full flex flex-col"
+          style="animation-delay: ${delay}s"
+          onclick="showBedrijfDetail('${bedrijf.slug}')"
+        >
+          <!-- Banner -->
+          <div class="relative aspect-video bg-gray-100 overflow-hidden">
+            <img 
+              src="${bannerUrl}" 
+              alt="${bedrijf.bedrijfsnaam}"
+              loading="lazy"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              onerror="this.src='${getPlaceholderBannerImage()}';"
+            >
+            <!-- Logo Overlappend -->
+            <div class="absolute -bottom-8 left-4">
+              <div class="w-24 h-24 rounded-full border-4 border-white bg-white overflow-hidden shadow-lg">
+                <img 
+                  src="${logoUrl}"
+                  alt="${bedrijf.bedrijfsnaam} logo"
+                  loading="lazy"
+                  class="w-full h-full object-cover"
+                  onerror="this.src='${getPlaceholderLogoImage()}';"
+                >
+              </div>
+            </div>
+          </div>
+          
+          <!-- Content -->
+          <div class="p-4 pt-12 flex flex-col flex-grow">
+            <h3 class="font-semibold text-lg truncate group-hover:text-black transition-colors">${bedrijf.bedrijfsnaam}</h3>
+            <p class="text-sm text-gray-500 mt-0.5 mb-3">${bedrijf.stad}${bedrijf.land ? ', ' + bedrijf.land : ''}</p>
+            <p class="text-sm text-gray-600 line-clamp-2 flex-grow">${bedrijf.beschrijving || 'Geen beschrijving beschikbaar'}</p>
+            
+            <!-- CTA -->
+            <div class="mt-4 pt-4 border-t border-gray-100">
+              <button class="w-full px-4 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-all">
+                Bekijk bedrijf →
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function showBedrijvenListing() {
+      document.getElementById('home-view').classList.add('hidden');
+      document.getElementById('profile-view').classList.add('hidden');
+      document.getElementById('legal-view').classList.add('hidden');
+      document.getElementById('bedrijf-detail-view').classList.add('hidden');
+      document.getElementById('bedrijven-view').classList.remove('hidden');
+      
+      const html = `
+        <!-- Hero Section -->
+        <section class="relative min-h-[60%] flex items-center justify-center px-4 py-20 overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-b from-gray-50 to-white"></div>
+          <div class="absolute top-20 left-10 w-72 h-72 bg-gray-100 rounded-full blur-3xl opacity-60"></div>
+          <div class="absolute bottom-10 right-10 w-96 h-96 bg-gray-50 rounded-full blur-3xl opacity-80"></div>
+          
+          <div class="relative z-10 text-center max-w-3xl mx-auto">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-black animate-fade-in-up">
+              Onze Bedrijven
+            </h1>
+            <p class="mt-6 text-lg sm:text-xl text-gray-600 font-light leading-relaxed animate-fade-in-up stagger-1">
+              Ontdek professionele partners en gerenommeerde bedrijven uit onze community
+            </p>
+            <div class="mt-10 animate-fade-in-up stagger-2">
+              <button onclick="document.getElementById('bedrijven-grid').scrollIntoView({ behavior: 'smooth' })" class="px-8 py-3 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all hover:scale-105">
+                Blader door bedrijven
+              </button>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Listing -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+          <div class="max-w-6xl mx-auto">
+            <div class="mb-8">
+              <h2 class="text-2xl sm:text-3xl font-light tracking-tight">Alle bedrijven</h2>
+              <p class="mt-2 text-gray-500" id="bedrijven-count">${STATE.bedrijven.length} bedrijven</p>
+            </div>
+            
+            <div id="bedrijven-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              ${STATE.bedrijven.length === 0 ? '<p class="col-span-full text-center text-gray-500 py-8">Nog geen bedrijven beschikbaar</p>' : STATE.bedrijven.map((b, i) => createBedrijfCard(b, i)).join('')}
+            </div>
+          </div>
+        </section>
+      `;
+      
+      document.getElementById('bedrijven-content').innerHTML = html;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showBedrijfDetail(slug) {
+      const bedrijf = STATE.bedrijven.find(b => b.slug === slug);
+      if (!bedrijf) return;
+      
+      document.getElementById('home-view').classList.add('hidden');
+      document.getElementById('profile-view').classList.add('hidden');
+      document.getElementById('legal-view').classList.add('hidden');
+      document.getElementById('bedrijven-view').classList.add('hidden');
+      document.getElementById('bedrijf-detail-view').classList.remove('hidden');
+      
+      const bannerUrl = bedrijf.banner_url && bedrijf.banner_url.startsWith('http') ? bedrijf.banner_url : getPlaceholderBannerImage();
+      const logoUrl = bedrijf.logo_url && bedrijf.logo_url.startsWith('http') ? bedrijf.logo_url : getPlaceholderLogoImage();
+      
+      const diensten = bedrijf.diensten ? bedrijf.diensten.split(';').map(d => d.trim()).filter(d => d) : [];
+      const producten = bedrijf.producten ? bedrijf.producten.split(';').map(p => p.trim()).filter(p => p) : [];
+      
+      const html = `
+        <div class="animate-fade-in">
+          <!-- Banner & Header -->
+          <div class="relative">
+            <div class="relative h-64 sm:h-80 bg-gray-100 overflow-hidden">
+              <img 
+                src="${bannerUrl}"
+                alt="${bedrijf.bedrijfsnaam}"
+                loading="lazy"
+                class="w-full h-full object-cover"
+                onerror="this.src='${getPlaceholderBannerImage()}';"
+              >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+            </div>
+            
+            <button onclick="navigateTo('bedrijven')" class="absolute top-4 left-4 p-2 glass-card rounded-full hover:bg-white transition-all z-10">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+            
+            <!-- Logo & Title (overlappend) -->
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-10">
+              <div class="flex flex-col sm:flex-row sm:items-end gap-4">
+                <div class="w-32 h-32 rounded-2xl border-4 border-white bg-white overflow-hidden shadow-lg flex-shrink-0">
+                  <img 
+                    src="${logoUrl}"
+                    alt="${bedrijf.bedrijfsnaam} logo"
+                    loading="lazy"
+                    class="w-full h-full object-cover"
+                    onerror="this.src='${getPlaceholderLogoImage()}';"
+                  >
+                </div>
+                <div class="flex-grow pb-2">
+                  <h1 class="text-3xl sm:text-4xl font-light tracking-tight">${bedrijf.bedrijfsnaam}</h1>
+                  <p class="text-gray-600 mt-2 flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    ${bedrijf.adres ? bedrijf.adres + ', ' : ''}${bedrijf.stad}${bedrijf.land ? ', ' + bedrijf.land : ''}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Content -->
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <!-- Beschrijving -->
+            <section class="mb-12">
+              <h2 class="text-2xl font-light mb-4">Over ons</h2>
+              <p class="text-gray-600 leading-relaxed">${bedrijf.beschrijving || 'Geen beschrijving beschikbaar'}</p>
+            </section>
+            
+            <!-- Contact Info -->
+            <section class="mb-12 bg-surface rounded-2xl p-6 sm:p-8 border border-gray-100">
+              <h2 class="text-2xl font-light mb-6">Contact</h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                ${bedrijf.adres ? `
+                  <div>
+                    <p class="text-sm text-gray-500 mb-1">Adres</p>
+                    <p class="font-medium">${bedrijf.adres}</p>
+                  </div>
+                ` : ''}
+                
+                ${bedrijf.telefoon ? `
+                  <div>
+                    <p class="text-sm text-gray-500 mb-1">Telefoon</p>
+                    <a href="tel:${bedrijf.telefoon}" class="font-medium text-black hover:underline">${bedrijf.telefoon}</a>
+                  </div>
+                ` : ''}
+                
+                ${bedrijf.email ? `
+                  <div>
+                    <p class="text-sm text-gray-500 mb-1">Email</p>
+                    <a href="mailto:${bedrijf.email}" class="font-medium text-black hover:underline break-all">${bedrijf.email}</a>
+                  </div>
+                ` : ''}
+                
+                ${bedrijf.website ? `
+                  <div>
+                    <p class="text-sm text-gray-500 mb-1">Website</p>
+                    <a href="${bedrijf.website}" target="_blank" rel="noopener noreferrer" class="font-medium text-black hover:underline break-all">${bedrijf.website.replace(/^https?:\/\//, '')}</a>
+                  </div>
+                ` : ''}
+              </div>
+            </section>
+            
+            <!-- Diensten -->
+            ${diensten.length > 0 ? `
+              <section class="mb-12">
+                <h2 class="text-2xl font-light mb-4">Diensten</h2>
+                <div class="flex flex-wrap gap-2">
+                  ${diensten.map(d => `<span class="px-4 py-2 bg-black text-white text-sm rounded-full">${d}</span>`).join('')}
+                </div>
+              </section>
+            ` : ''}
+            
+            <!-- Producten -->
+            ${producten.length > 0 ? `
+              <section class="mb-12">
+                <h2 class="text-2xl font-light mb-4">Producten</h2>
+                <div class="flex flex-wrap gap-2">
+                  ${producten.map(p => `<span class="px-4 py-2 bg-gray-100 text-gray-800 text-sm rounded-full">${p}</span>`).join('')}
+                </div>
+              </section>
+            ` : ''}
+            
+            <!-- Contact Formulier -->
+            <section class="bg-black text-white rounded-2xl p-8 sm:p-12">
+              <h2 class="text-2xl font-light mb-2">Stuur een bericht</h2>
+              <p class="text-gray-300 mb-8">Neem direct contact op met dit bedrijf</p>
+              
+              <form id="contact-form-${bedrijf.slug}" class="space-y-4" onsubmit="handleContactFormSubmit(event, '${bedrijf.slug}', '${bedrijf.email}')">
+                <div>
+                  <label for="contact-name" class="block text-sm font-medium mb-2">Uw naam</label>
+                  <input 
+                    type="text" 
+                    id="contact-name" 
+                    name="naam" 
+                    required
+                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:border-white focus:bg-white/20 transition-all" 
+                    placeholder="John Doe"
+                  >
+                </div>
+                
+                <div>
+                  <label for="contact-email" class="block text-sm font-medium mb-2">Uw email</label>
+                  <input 
+                    type="email" 
+                    id="contact-email" 
+                    name="email" 
+                    required
+                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:border-white focus:bg-white/20 transition-all" 
+                    placeholder="john@example.com"
+                  >
+                </div>
+                
+                <div>
+                  <label for="contact-message" class="block text-sm font-medium mb-2">Bericht</label>
+                  <textarea 
+                    id="contact-message" 
+                    name="bericht" 
+                    required
+                    rows="5"
+                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:border-white focus:bg-white/20 transition-all resize-none" 
+                    placeholder="Uw bericht hier..."
+                  ></textarea>
+                </div>
+                
+                <div id="form-status-${bedrijf.slug}" class="text-sm text-white/70"></div>
+                
+                <button 
+                  type="submit" 
+                  id="submit-btn-${bedrijf.slug}"
+                  class="w-full px-6 py-3 bg-white text-black font-medium rounded-lg hover:bg-gray-200 transition-all"
+                >
+                  Verzenden
+                </button>
+              </form>
+            </section>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('bedrijf-detail-content').innerHTML = html;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function handleContactFormSubmit(event, bedrijfSlug, bedrijfEmail) {
+      event.preventDefault();
+      
+      const form = event.target;
+      const submitBtn = document.getElementById(`submit-btn-${bedrijfSlug}`);
+      const statusDiv = document.getElementById(`form-status-${bedrijfSlug}`);
+      
+      const naam = form.querySelector('[name="naam"]').value.trim();
+      const email = form.querySelector('[name="email"]').value.trim();
+      const bericht = form.querySelector('[name="bericht"]').value.trim();
+      
+      if (!naam || !email || !bericht) {
+        statusDiv.innerHTML = '<span class="text-red-400">Vul alstublieft alle velden in.</span>';
+        return;
+      }
+      
+      // Disable submit button
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Bezig met verzenden...';
+      statusDiv.innerHTML = '';
+      
+      try {
+        // Send to Google Apps Script endpoint
+        const response = await fetch(CONFIG.JSON_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            action: 'send_contact_email',
+            bedrijf_email: bedrijfEmail,
+            naam: naam,
+            email: email,
+            bericht: bericht
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        
+        const result = await response.json();
+        
+        if (result.success || result.status === 'success') {
+          statusDiv.innerHTML = '<span class="text-green-400">✓ Bericht succesvol verzonden! Het bedrijf ontvangt uw bericht shortly.</span>';
+          form.reset();
+          setTimeout(() => {
+            statusDiv.innerHTML = '';
+          }, 5000);
+        } else {
+          throw new Error(result.error || 'Fout bij verzenden');
+        }
+      } catch (error) {
+        console.error('Contact form error:', error);
+        statusDiv.innerHTML = '<span class="text-red-400">Fout bij verzenden. Probeer later opnieuw of stuur direct een e-mail.</span>';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Verzenden';
+      }
+    }
+ </body>
+</html></script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0ea2dae42746656',t:'MTc4MTk1MjI2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
