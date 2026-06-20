@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="nl">
+ <head><script src="/_sdk/telemetry_sdk.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JKA Beveiliging</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Libre+Franklin:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#07100d;
+      --deep:#0c1713;
+      --panel:#12221b;
+      --lime:#b7e47b;
+      --cream:#f3f6ef;
+      --muted:#aeb9b1;
+    }
+    html { scroll-behavior: smooth; }
+    body{
+      margin:0;
+      font-family:'DM Sans', sans-serif;
+      background:#07100d;
+      color:#f3f6ef;
+    }
+    .heading{font-family:'Libre Franklin', sans-serif;}
+    .hero-overlay{
+      background:
+        linear-gradient(90deg, rgba(7,16,13,.96) 0%, rgba(7,16,13,.86) 38%, rgba(7,16,13,.28) 72%, rgba(7,16,13,.2) 100%);
+    }
+    .grain::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.08;
+      background-image: radial-gradient(rgba(255,255,255,.35) 1px, transparent 1px);
+      background-size: 4px 4px;
+      mix-blend-mode:soft-light;
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-8px;
+      width:0;
+      height:2px;
+      background:var(--lime);
+      transition:width .25s ease;
+    }
+    .nav-link:hover::after{ width:100%; }
+    .service-card{
+      transition:transform .3s ease, border-color .3s ease, background .3s ease;
+    }
+    .service-card:hover{
+      transform:translateY(-8px);
+      border-color:rgba(183,228,123,.65);
+      background:#162a22;
+    }
+    .fade-up{
+      animation:fadeUp .8s ease both;
+    }
+    .delay-1{animation-delay:.12s}
+    .delay-2{animation-delay:.24s}
+    .delay-3{animation-delay:.36s}
+    @keyframes fadeUp{
+      from{opacity:0; transform:translateY(20px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+    .mobile-panel{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .35s ease;
+    }
+    .mobile-panel.open{max-height:320px;}
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" class="w-full">
+  <header data-template-id="header-bar" class="canva-header fixed top-0 left-0 w-full z-50 border-b border-white/10 bg-[#07100d]/90 backdrop-blur-md">
+   <div class="w-full max-w-7xl mx-auto px-5 md:px-8">
+    <div class="h-20 flex items-center justify-between"><a href="#home" class="flex items-center gap-3">
+      <div data-template-id="logo-mark" class="canva-container w-10 h-10 rounded-sm flex items-center justify-center bg-[#b7e47b]"><span class="text-[#07100d] font-bold text-sm tracking-tight">JKA</span>
+      </div>
+      <div>
+       <p data-template-id="brand-name" class="canva-text heading font-bold tracking-[0.2em] text-sm uppercase"></p>
+       <p data-template-id="brand-subtitle" class="canva-text text-[10px] uppercase tracking-[0.24em] text-[#aeb9b1] mt-0.5"></p>
+      </div></a>
+     <nav class="hidden md:flex items-center gap-8" aria-label="Hoofdnavigatie"><a href="#diensten" data-template-id="nav-services" class="canva-link nav-link relative text-sm uppercase tracking-[0.18em] text-[#d7ddd8]"></a> <a href="#over-ons" data-template-id="nav-about" class="canva-link nav-link relative text-sm uppercase tracking-[0.18em] text-[#d7ddd8]"></a> <a href="#werkwijze" data-template-id="nav-process" class="canva-link nav-link relative text-sm uppercase tracking-[0.18em] text-[#d7ddd8]"></a> <a href="#contact" data-template-id="nav-contact" class="canva-link nav-link relative text-sm uppercase tracking-[0.18em] text-[#d7ddd8]"></a>
+     </nav>
+     <div class="hidden md:block"><a href="#contact" data-template-id="header-cta" class="canva-button inline-flex items-center gap-2 px-5 py-3 bg-[#b7e47b] text-[#07100d] font-bold text-sm uppercase tracking-[0.12em] hover:bg-[#c9ee98] transition"> <span></span><i data-lucide="arrow-up-right" class="w-4 h-4"></i> </a>
+     </div><button id="mobileMenuBtn" class="md:hidden text-white p-2 focus:outline-none focus:ring-2 focus:ring-[#b7e47b]" aria-label="Menu openen" aria-expanded="false"> <i data-lucide="menu" class="w-6 h-6"></i> </button>
+    </div>
+    <div id="mobileMenu" class="mobile-panel md:hidden border-t border-white/10">
+     <nav class="py-4 flex flex-col gap-4" aria-label="Mobiele navigatie"><a href="#diensten" data-template-id="mobile-nav-services" class="canva-link text-sm uppercase tracking-[0.18em] text-[#d7ddd8]"></a> <a href="#over-ons" data-template-id="mobile-nav-about" class="canva-link text-sm uppercase tracking-[0.18em] text-[#d7ddd8]"></a> <a href="#werkwijze" data-template-id="mobile-nav-process" class="canva-link text-sm uppercase tracking-[0.18em] text-[#d7ddd8]"></a> <a href="#contact" data-template-id="mobile-nav-contact" class="canva-link text-sm uppercase tracking-[0.18em] text-[#d7ddd8]"></a>
+     </nav>
+    </div>
+   </div>
+  </header>
+  <main>
+   <section id="home" class="relative min-h-[760px] overflow-hidden"><img data-template-id="hero-image" class="canva-image absolute inset-0 w-full h-full object-cover" loading="lazy">
+    <div class="hero-overlay absolute inset-0"></div>
+    <div class="grain absolute inset-0"></div>
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-8 pt-40 pb-20">
+     <div class="max-w-3xl">
+      <div class="fade-up inline-flex items-center gap-3 mb-7"><span class="w-10 h-px bg-[#b7e47b]"></span>
+       <p data-template-id="hero-eyebrow" class="canva-text text-[#b7e47b] uppercase tracking-[0.28em] text-xs font-bold"></p>
+      </div>
+      <h1 data-template-id="hero-title" class="canva-text heading fade-up delay-1 font-extrabold text-[46px] md:text-[68px] leading-[0.98] tracking-[-0.05em] max-w-3xl"></h1>
+      <p data-template-id="hero-copy" class="canva-text fade-up delay-2 mt-7 text-lg md:text-xl leading-8 text-[#d9e0da] max-w-2xl"></p>
+      <div class="fade-up delay-3 flex flex-col sm:flex-row gap-4 mt-10"><a href="#contact" data-template-id="hero-primary-button" class="canva-button inline-flex items-center justify-center gap-2 px-6 py-4 bg-[#b7e47b] text-[#07100d] font-bold uppercase tracking-[0.12em] text-sm hover:bg-[#c9ee98] transition"> <span></span><i data-lucide="arrow-right" class="w-4 h-4"></i> </a> <a href="#diensten" data-template-id="hero-secondary-button" class="canva-button inline-flex items-center justify-center gap-2 px-6 py-4 border border-white/25 text-white font-bold uppercase tracking-[0.12em] text-sm hover:border-[#b7e47b] hover:text-[#b7e47b] transition"> <span></span><i data-lucide="shield-check" class="w-4 h-4"></i> </a>
+      </div>
+     </div>
+     <div class="mt-20 grid grid-cols-1 sm:grid-cols-3 max-w-2xl border-t border-white/15 pt-6 gap-6">
+      <div>
+       <p data-template-id="stat-1-number" class="canva-text heading text-3xl font-bold text-[#b7e47b]"></p>
+       <p data-template-id="stat-1-label" class="canva-text text-sm text-[#aeb9b1] mt-1"></p>
+      </div>
+      <div>
+       <p data-template-id="stat-2-number" class="canva-text heading text-3xl font-bold text-[#b7e47b]"></p>
+       <p data-template-id="stat-2-label" class="canva-text text-sm text-[#aeb9b1] mt-1"></p>
+      </div>
+      <div>
+       <p data-template-id="stat-3-number" class="canva-text heading text-3xl font-bold text-[#b7e47b]"></p>
+       <p data-template-id="stat-3-label" class="canva-text text-sm text-[#aeb9b1] mt-1"></p>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section id="diensten" data-template-id="services-section" class="canva-section py-24 md:py-32 bg-[#0c1713]">
+    <div class="w-full max-w-7xl mx-auto px-5 md:px-8">
+     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-14">
+      <div class="max-w-2xl">
+       <p data-template-id="services-eyebrow" class="canva-text uppercase tracking-[0.26em] text-xs font-bold text-[#b7e47b] mb-4"></p>
+       <h2 data-template-id="services-title" class="canva-text heading font-bold text-[34px] md:text-[52px] leading-tight tracking-[-0.04em]"></h2>
+      </div>
+      <p data-template-id="services-copy" class="canva-text max-w-md text-[#aeb9b1] leading-7"></p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-5">
+      <article data-template-id="service-card-1" class="canva-card service-card border border-white/10 bg-[#12221b] p-7 min-h-[300px] flex flex-col justify-between">
+       <div>
+        <div class="w-12 h-12 rounded-sm border border-[#b7e47b]/40 flex items-center justify-center text-[#b7e47b] mb-8"><i data-lucide="building-2" class="w-5 h-5"></i>
+        </div>
+        <p data-template-id="service-1-number" class="canva-text text-xs tracking-[0.24em] text-[#6d7c72] uppercase mb-3"></p>
+        <h3 data-template-id="service-1-title" class="canva-text heading text-2xl font-bold mb-4"></h3>
+        <p data-template-id="service-1-copy" class="canva-text text-[#aeb9b1] leading-7"></p>
+       </div>
+       <div class="mt-8 text-[#b7e47b]">
+        <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+       </div>
+      </article>
+      <article data-template-id="service-card-2" class="canva-card service-card border border-white/10 bg-[#12221b] p-7 min-h-[300px] flex flex-col justify-between">
+       <div>
+        <div class="w-12 h-12 rounded-sm border border-[#b7e47b]/40 flex items-center justify-center text-[#b7e47b] mb-8"><i data-lucide="users" class="w-5 h-5"></i>
+        </div>
+        <p data-template-id="service-2-number" class="canva-text text-xs tracking-[0.24em] text-[#6d7c72] uppercase mb-3"></p>
+        <h3 data-template-id="service-2-title" class="canva-text heading text-2xl font-bold mb-4"></h3>
+        <p data-template-id="service-2-copy" class="canva-text text-[#aeb9b1] leading-7"></p>
+       </div>
+       <div class="mt-8 text-[#b7e47b]">
+        <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+       </div>
+      </article>
+      <article data-template-id="service-card-3" class="canva-card service-card border border-white/10 bg-[#12221b] p-7 min-h-[300px] flex flex-col justify-between">
+       <div>
+        <div class="w-12 h-12 rounded-sm border border-[#b7e47b]/40 flex items-center justify-center text-[#b7e47b] mb-8"><i data-lucide="car" class="w-5 h-5"></i>
+        </div>
+        <p data-template-id="service-3-number" class="canva-text text-xs tracking-[0.24em] text-[#6d7c72] uppercase mb-3"></p>
+        <h3 data-template-id="service-3-title" class="canva-text heading text-2xl font-bold mb-4"></h3>
+        <p data-template-id="service-3-copy" class="canva-text text-[#aeb9b1] leading-7"></p>
+       </div>
+       <div class="mt-8 text-[#b7e47b]">
+        <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+       </div>
+      </article>
+     </div>
+    </div>
+   </section>
+   <section id="over-ons" class="py-24 md:py-32 bg-[#f3f6ef] text-[#102019]">
+    <div class="w-full max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-14 items-center">
+     <div class="relative"><img data-template-id="about-image" class="canva-image w-full h-[520px] object-cover" loading="lazy">
+      <div data-template-id="experience-badge" class="canva-card absolute -bottom-6 -right-4 md:right-8 bg-[#102019] text-white px-7 py-6 shadow-2xl">
+       <p data-template-id="experience-number" class="canva-text heading text-4xl font-bold text-[#b7e47b]"></p>
+       <p data-template-id="experience-label" class="canva-text text-xs uppercase tracking-[0.18em] mt-1 text-[#d4ddd5]"></p>
+      </div>
+     </div>
+     <div class="lg:pl-6">
+      <p data-template-id="about-eyebrow" class="canva-text uppercase tracking-[0.26em] text-xs font-bold text-[#55795d] mb-4"></p>
+      <h2 data-template-id="about-title" class="canva-text heading font-bold text-[34px] md:text-[52px] leading-tight tracking-[-0.04em]"></h2>
+      <p data-template-id="about-copy" class="canva-text mt-6 text-[#526158] leading-8 text-lg"></p>
+      <div class="mt-9 space-y-4">
+       <div class="flex gap-3 items-start">
+        <div class="mt-1 text-[#55795d]">
+         <i data-lucide="check" class="w-5 h-5"></i>
+        </div>
+        <p data-template-id="about-point-1" class="canva-text text-[#26372e]"></p>
+       </div>
+       <div class="flex gap-3 items-start">
+        <div class="mt-1 text-[#55795d]">
+         <i data-lucide="check" class="w-5 h-5"></i>
+        </div>
+        <p data-template-id="about-point-2" class="canva-text text-[#26372e]"></p>
+       </div>
+       <div class="flex gap-3 items-start">
+        <div class="mt-1 text-[#55795d]">
+         <i data-lucide="check" class="w-5 h-5"></i>
+        </div>
+        <p data-template-id="about-point-3" class="canva-text text-[#26372e]"></p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section id="werkwijze" data-template-id="process-section" class="canva-section py-24 md:py-32 bg-[#0c1713]">
+    <div class="w-full max-w-7xl mx-auto px-5 md:px-8">
+     <div class="max-w-2xl mb-14">
+      <p data-template-id="process-eyebrow" class="canva-text uppercase tracking-[0.26em] text-xs font-bold text-[#b7e47b] mb-4"></p>
+      <h2 data-template-id="process-title" class="canva-text heading font-bold text-[34px] md:text-[52px] leading-tight tracking-[-0.04em]"></h2>
+     </div>
+     <div class="grid md:grid-cols-4 gap-8 relative">
+      <div class="hidden md:block absolute top-8 left-0 right-0 h-px bg-white/10"></div>
+      <div class="relative">
+       <div class="w-16 h-16 rounded-full bg-[#b7e47b] text-[#07100d] flex items-center justify-center heading font-bold text-lg relative z-10">
+        01
+       </div>
+       <h3 data-template-id="process-1-title" class="canva-text heading text-xl font-bold mt-7"></h3>
+       <p data-template-id="process-1-copy" class="canva-text text-[#aeb9b1] leading-7 mt-3"></p>
+      </div>
+      <div class="relative">
+       <div class="w-16 h-16 rounded-full bg-[#b7e47b] text-[#07100d] flex items-center justify-center heading font-bold text-lg relative z-10">
+        02
+       </div>
+       <h3 data-template-id="process-2-title" class="canva-text heading text-xl font-bold mt-7"></h3>
+       <p data-template-id="process-2-copy" class="canva-text text-[#aeb9b1] leading-7 mt-3"></p>
+      </div>
+      <div class="relative">
+       <div class="w-16 h-16 rounded-full bg-[#b7e47b] text-[#07100d] flex items-center justify-center heading font-bold text-lg relative z-10">
+        03
+       </div>
+       <h3 data-template-id="process-3-title" class="canva-text heading text-xl font-bold mt-7"></h3>
+       <p data-template-id="process-3-copy" class="canva-text text-[#aeb9b1] leading-7 mt-3"></p>
+      </div>
+      <div class="relative">
+       <div class="w-16 h-16 rounded-full bg-[#b7e47b] text-[#07100d] flex items-center justify-center heading font-bold text-lg relative z-10">
+        04
+       </div>
+       <h3 data-template-id="process-4-title" class="canva-text heading text-xl font-bold mt-7"></h3>
+       <p data-template-id="process-4-copy" class="canva-text text-[#aeb9b1] leading-7 mt-3"></p>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section id="contact" class="py-20 md:py-28 bg-[#f3f6ef]">
+    <div class="w-full max-w-7xl mx-auto px-5 md:px-8">
+     <div data-template-id="contact-panel" class="canva-panel bg-[#102019] px-7 py-12 md:px-14 md:py-16 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+      <div class="max-w-2xl">
+       <p data-template-id="contact-eyebrow" class="canva-text uppercase tracking-[0.26em] text-xs font-bold text-[#b7e47b] mb-4"></p>
+       <h2 data-template-id="contact-title" class="canva-text heading font-bold text-[34px] md:text-[50px] leading-tight tracking-[-0.04em] text-white"></h2>
+       <p data-template-id="contact-copy" class="canva-text text-[#bdc8bf] leading-7 mt-5 max-w-xl"></p>
+      </div>
+      <div class="flex flex-col sm:flex-row lg:flex-col gap-3 w-full sm:w-auto"><a href="tel:+31201234567" data-template-id="contact-phone" class="canva-button inline-flex items-center justify-center gap-2 px-6 py-4 bg-[#b7e47b] text-[#07100d] font-bold uppercase tracking-[0.12em] text-sm hover:bg-[#c9ee98] transition"> <i data-lucide="phone" class="w-4 h-4"></i><span></span> </a> <a href="mailto:info@jkabeveiliging.nl" data-template-id="contact-email" class="canva-button inline-flex items-center justify-center gap-2 px-6 py-4 border border-white/20 text-white font-bold uppercase tracking-[0.12em] text-sm hover:border-[#b7e47b] hover:text-[#b7e47b] transition"> <i data-lucide="mail" class="w-4 h-4"></i><span></span> </a>
+      </div>
+     </div>
+    </div>
+   </section>
+  </main>
+  <footer data-template-id="footer-section" class="canva-footer bg-[#07100d] border-t border-white/10">
+   <div class="w-full max-w-7xl mx-auto px-5 md:px-8 py-10">
+    <div class="grid md:grid-cols-3 gap-8 items-start">
+     <div>
+      <p data-template-id="footer-brand" class="canva-text heading font-bold tracking-[0.2em] text-sm uppercase"></p>
+      <p data-template-id="footer-copy" class="canva-text text-[#8f9d93] text-sm leading-6 mt-3 max-w-xs"></p>
+     </div>
+     <div>
+      <p data-template-id="footer-contact-title" class="canva-text text-xs uppercase tracking-[0.2em] text-[#b7e47b] mb-3"></p>
+      <p data-template-id="footer-contact" class="canva-text text-sm text-[#d4ddd5] leading-7"></p>
+     </div>
+     <div class="md:text-right">
+      <p data-template-id="footer-rights" class="canva-text text-sm text-[#8f9d93]"></p>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+    lucide.createIcons();
+
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+      menuBtn.innerHTML = isOpen ? '<i data-lucide="x" class="w-6 h-6"></i>' : '<i data-lucide="menu" class="w-6 h-6"></i>';
+      lucide.createIcons();
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+        lucide.createIcons();
+      });
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0ea6b0084258ade',t:'MTc4MTk1NDc4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
